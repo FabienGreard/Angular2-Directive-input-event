@@ -2,7 +2,6 @@
 Handle event on input
 
 #How To use
-exemple :
 
 <div [isActive]="'search-active'" [isKeyDesactive]="'13'" [isKeyActive]="'38'" [selectMethod]="'add'" [isFocus]="'search'" [cleanInput]="'search'" class="app-search">
 
