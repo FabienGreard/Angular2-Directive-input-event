@@ -44,13 +44,13 @@ export class isActiveDirective{
     this._isKeyDesactive = isKeyDesactive;
   }
 
-  @Input() set isExeption(isExeption: Array<string>){
+  @Input() set isExeption(isExeption: Array<string>){ // use like this [isExeption]="['className1', className2']"
     this._isExeptions = isExeption;
   }
 
   @Input('isActive') class: string;
 
-  @HostListener('click', ['$event']) onClick(e) {
+  @HostListener('click', ['$event']) onClick(e) { // handle click on item
     if(this.method === "toggle"){
       console.log(this.checkExeptions(e));
       if(!this.checkExeptions(e)){
@@ -65,7 +65,7 @@ export class isActiveDirective{
     e.stopPropagation();
   }
 
-  @HostListener('document:click', ['$event']) onDocumentClick(e) {
+  @HostListener('document:click', ['$event']) onDocumentClick(e) { // handle click on document
     if(this.el.classList.contains(this.class || this.defaultClass)){
       this.removeChildrens();
       this.clean();
@@ -73,7 +73,7 @@ export class isActiveDirective{
     }
   }
 
-  @HostListener('document:keypress', ['$event']) onKeyPress(e) {
+  @HostListener('document:keypress', ['$event']) onKeyPress(e) { // handle Key press shortcuts 
     //console.log(e.keyCode);
     if(typeof this._isKeyActive != 'undefined'){
     this.keyActive(e);
