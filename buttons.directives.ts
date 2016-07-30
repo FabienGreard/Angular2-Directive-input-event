@@ -5,14 +5,14 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 export class isActiveDirective{
   private defaultClass: string = "defaultActive";
-  private childrens: Array<string>;
+  private childrens: Array<string> = [];
   private childrensClass: string;
   private method: string = "toggle"; // toggle or // ad
   private _isFocus: string; // focus element must be an ID
   private _isKeyActive: string; // key shortcus on active
   private _isKeyDesactive: string; // _ _ _  on desactive
   private isText: string; // text clean must be an ID
-  private _isExeptions: Array<string>; //children or class that shouldn't execute code
+  private _isExeptions: Array<string> = []; //children or class that shouldn't execute code
   private el: HTMLElement;
   constructor(el: ElementRef) { this.el = el.nativeElement; }
 
@@ -44,13 +44,13 @@ export class isActiveDirective{
     this._isKeyDesactive = isKeyDesactive;
   }
 
-  @Input() set isExeption(isExeption: Array<string>){ // use like this [isExeption]="['className1', className2']"
+  @Input() set isExeption(isExeption: Array<string>){
     this._isExeptions = isExeption;
   }
 
   @Input('isActive') class: string;
 
-  @HostListener('click', ['$event']) onClick(e) { // handle click on item
+  @HostListener('click', ['$event']) onClick(e) {
     if(this.method === "toggle"){
       console.log(this.checkExeptions(e));
       if(!this.checkExeptions(e)){
@@ -65,7 +65,7 @@ export class isActiveDirective{
     e.stopPropagation();
   }
 
-  @HostListener('document:click', ['$event']) onDocumentClick(e) { // handle click on document
+  @HostListener('document:click', ['$event']) onDocumentClick(e) {
     if(this.el.classList.contains(this.class || this.defaultClass)){
       this.removeChildrens();
       this.clean();
@@ -73,16 +73,15 @@ export class isActiveDirective{
     }
   }
 
-  @HostListener('document:keypress', ['$event']) onKeyPress(e) { // handle Key press shortcuts 
+  @HostListener('document:keypress', ['$event']) onKeyPress(e) {
     //console.log(e.keyCode);
-    if(typeof this._isKeyActive != 'undefined'){
-    this.keyActive(e);
-    }
     if(typeof this._isKeyDesactive != 'undefined'){
-    this.keyDesactive(e);
+      this.keyDesactive(e);
     }
 
-    return false;
+    if(typeof this._isKeyActive != 'undefined'){
+      return this.keyActive(e);
+    }
   }
 
   private keyActive(e){
@@ -93,6 +92,7 @@ export class isActiveDirective{
         this.focus();
         this.el.classList.add(this.class || this.defaultClass);
       }
+      return false;
     }
   }
 
