@@ -10,8 +10,18 @@ Will toggle class "search-active" with a focus on class search and clean it ( it
 # include on your component buttons.directive.ts 
 
 import { isActiveDirective } from '../directives/buttons.directives';
-@Component
-directives: [isActiveDirective] 
+
+@Component({
+
+  selector: 'dashboard',
+  
+  templateUrl: '../../html/dashboard.html',
+  
+  providers: [AuthenticationService, AnimationService],
+  
+  directives: [isActiveDirective]
+  
+})
 
 # Directives 
  Directives : [isActive], [haveChildrens], [haveChildrensClass], [selectMethod], [cleanInput], [isFocus], [isKeyActive], [isKeyDesactive], [isExeption]
